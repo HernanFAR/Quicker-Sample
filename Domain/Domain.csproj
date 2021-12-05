@@ -4,4 +4,19 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Contexts\AnswerBoundedContext\" />
+    <Folder Include="Contexts\QuestionBoundedContext\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Quicker.Domain" Version="0.4.0" />
+    <PackageReference Include="Quicker.Domain.DataAccess" Version="0.4.0" />
+    <PackageReference Include="Quicker.Domain.FileManager" Version="0.4.0" />
+  </ItemGroup>
+
 </Project>
