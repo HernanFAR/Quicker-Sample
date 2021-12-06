@@ -4,7 +4,7 @@ using Domain.Contexts.QuestionBoundedContext.Validators;
 using FluentAssertions;
 using Xunit;
 
-namespace Domain.UnitTests.Contexts.QuestionBoundedContext
+namespace Domain.UnitTests.Contexts.QuestionBoundedContext.Validations
 {
     public class QuestionValidatorTests
     {
