@@ -10,10 +10,10 @@
 
   <ItemGroup>
     <Folder Include="Contexts\AnswerBoundedContext\" />
-    <Folder Include="Contexts\QuestionBoundedContext\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="10.3.5" />
     <PackageReference Include="Quicker.Domain" Version="0.4.0" />
     <PackageReference Include="Quicker.Domain.DataAccess" Version="0.4.0" />
     <PackageReference Include="Quicker.Domain.FileManager" Version="0.4.0" />
