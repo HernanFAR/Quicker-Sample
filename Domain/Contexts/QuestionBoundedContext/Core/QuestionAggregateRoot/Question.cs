@@ -1,20 +1,20 @@
-﻿using Domain.Contexts.QuestionBoundedContext.ETOs;
-using Quicker.Domain;
-using Quicker.Domain.Abstracts.Audited.AggregateRoots.CUDRAudited;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Domain.Contexts.QuestionBoundedContext.ETOs;
 using Domain.Contexts.QuestionBoundedContext.Validators;
 using Domain.Contexts.SharedBoundedContext.ValueObjects;
 using FluentValidation;
+using Quicker.Domain;
+using Quicker.Domain.Abstracts.Audited.AggregateRoots.CUDRAudited;
 
-namespace Domain.Contexts.QuestionBoundedContext.Core
+namespace Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot
 {
     public sealed class Question : CUDRUserAuditedAggregateRoot<Guid, Guid?>
     {
-        private Question() { }
+        private Question() : base(Guid.NewGuid()) { }
 
-        public Question(string name, Guid createdBy) : base(Guid.NewGuid())
+        public Question(string name, Guid createdBy) : this()
         {
             Name = name;
 
@@ -27,7 +27,7 @@ namespace Domain.Contexts.QuestionBoundedContext.Core
 
         public IEnumerable<QuestionVote> Votes => _Votes;
 
-        public VoteDetail CurrentVotes { get; private set; } = new VoteDetail(0, 0);
+        public VoteDetail CurrentVotes { get; private set; } = new(0, 0);
 
         public override void Validate()
         {

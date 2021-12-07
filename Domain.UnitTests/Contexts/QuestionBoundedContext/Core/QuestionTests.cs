@@ -1,10 +1,9 @@
-﻿using Domain.Contexts.QuestionBoundedContext.Core;
+﻿using Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot;
 using Domain.Contexts.QuestionBoundedContext.ETOs;
-using FluentAssertions;
-using System;
-using System.Xml.Linq;
 using Domain.Contexts.SharedBoundedContext.ValueObjects;
+using FluentAssertions;
 using FluentValidation;
+using System;
 using Xunit;
 
 namespace Domain.UnitTests.Contexts.QuestionBoundedContext.Core
@@ -37,18 +36,33 @@ namespace Domain.UnitTests.Contexts.QuestionBoundedContext.Core
             var question = new Question(name, createdBy);
 
             question.UpdateInfo(newName, updatedBy);
-            
+
             question.Name.Should().Be(newName);
             question.UpdatedBy.Should().Be(updatedBy);
             question.UpdatedDate.Should().BeCloseTo(DateTime.Now, TimeSpan.FromMilliseconds(250));
         }
 
         [Fact]
-        public void AddVote_Success_Should_AddNewVoteToQuestionAndRaiseVoteAddedETO_Detail_NonExistingVote()
+        public void CurrentVotesProp_Success_Should_ReturnVotes()
         {
             const string name = "TestString";
             var createdBy = Guid.NewGuid();
-            
+
+            var question = new Question(name, createdBy);
+
+            VoteDetail details = question.CurrentVotes;
+
+            details.UpVotes.Should().Be(0);
+            details.DownVotes.Should().Be(0);
+            details.DeltaOfVotes.Should().Be(0);
+        }
+
+        [Fact]
+        public void SetVote_Success_Should_AddNewVoteToQuestionAndRaiseVoteAddedETO_Detail_NonExistingVote()
+        {
+            const string name = "TestString";
+            var createdBy = Guid.NewGuid();
+
             var votedBy = Guid.NewGuid();
             const bool isUp = true;
 
@@ -67,11 +81,11 @@ namespace Domain.UnitTests.Contexts.QuestionBoundedContext.Core
         }
 
         [Fact]
-        public void AddVote_Success_Should_UpdateVoteToQuestionAndRaiseVoteAddedETO_Detail_ExistingVote()
+        public void SetVote_Success_Should_UpdateVoteToQuestionAndRaiseVoteAddedETO_Detail_ExistingVote()
         {
             const string name = "TestString";
             var createdBy = Guid.NewGuid();
-            
+
             var votedBy = Guid.NewGuid();
             const bool isUp = true;
             const bool newIsUp = false;
@@ -88,50 +102,6 @@ namespace Domain.UnitTests.Contexts.QuestionBoundedContext.Core
 
             question.Votes.Should().HaveCount(expVotesCount);
             question.Votes.Should().Contain(e => !e.IsUp && e.By == votedBy && e.Id != default);
-        }
-
-        [Fact]
-        public void Validate_Success_Should_PassFunction_Detail_ValidQuestion()
-        {
-            const string name = "TestString";
-            var createdBy = Guid.NewGuid();
-
-            var question = new Question(name, createdBy);
-            
-            question.Validate();
-
-            true.Should().BeTrue();
-        }
-
-        [Fact]
-        public void Validate_Failure_Should_PassFunction_Detail_ValidQuestion()
-        {
-            const string? name = null;
-            var createdBy = Guid.NewGuid();
-
-            const int expCount = 1;
-
-            var question = new Question(name!, createdBy);
-            
-            Action act = () => question.Validate();
-
-            act.Should().ThrowExactly<ValidationException>()
-                .And.Errors.Should().HaveCount(expCount);
-        }
-
-        [Fact]
-        public void CurrentVotesProp_Success_Should_ReturnVotes()
-        {
-            const string name = "TestString";
-            var createdBy = Guid.NewGuid();
-            
-            var question = new Question(name, createdBy);
-
-            VoteDetail details = question.CurrentVotes;
-
-            details.UpVotes.Should().Be(0);
-            details.DownVotes.Should().Be(0);
-            details.DeltaOfVotes.Should().Be(0);
         }
 
         [Fact]
@@ -156,6 +126,35 @@ namespace Domain.UnitTests.Contexts.QuestionBoundedContext.Core
             details.UpVotes.Should().Be(expUpVotes);
             details.DownVotes.Should().Be(expDownVotes);
             details.DeltaOfVotes.Should().Be(expDeltaOfVotes);
+        }
+
+        [Fact]
+        public void Validate_Success_Should_PassFunction_Detail_ValidQuestion()
+        {
+            const string name = "TestString";
+            var createdBy = Guid.NewGuid();
+
+            var question = new Question(name, createdBy);
+
+            question.Validate();
+
+            true.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Validate_Failure_Should_PassFunction_Detail_ValidQuestion()
+        {
+            const string? name = null;
+            var createdBy = Guid.NewGuid();
+
+            const int expCount = 1;
+
+            var question = new Question(name!, createdBy);
+
+            Action act = () => question.Validate();
+
+            act.Should().ThrowExactly<ValidationException>()
+                .And.Errors.Should().HaveCount(expCount);
         }
     }
 }

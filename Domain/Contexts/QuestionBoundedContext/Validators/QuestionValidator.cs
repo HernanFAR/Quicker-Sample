@@ -1,5 +1,5 @@
 ﻿using Domain.Contexts.QuestionBoundedContext.Constants;
-using Domain.Contexts.QuestionBoundedContext.Core;
+using Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot;
 using FluentValidation;
 
 namespace Domain.Contexts.QuestionBoundedContext.Validators

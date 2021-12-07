@@ -4,7 +4,7 @@
     {
         public class NameProperty
         {
-            public const int MaxLength = 512;
+            public const int MaxLength = 1024;
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using System;
-using Domain.Contexts.QuestionBoundedContext.Core;
+﻿using Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot;
 using Domain.Contexts.QuestionBoundedContext.Validators;
 using FluentAssertions;
+using System;
 using Xunit;
 
 namespace Domain.UnitTests.Contexts.QuestionBoundedContext.Validations
@@ -57,7 +57,7 @@ namespace Domain.UnitTests.Contexts.QuestionBoundedContext.Validations
             result.IsValid.Should().BeFalse();
 
             result.Errors.Should().HaveCount(expCount);
-            result.Errors.Should().ContainSingle(e => e.ErrorMessage == $"La pregunta no debe de tener más de 512 caracteres, ingresaste {name.Length}");
+            result.Errors.Should().ContainSingle(e => e.ErrorMessage == $"La pregunta no debe de tener más de 1024 caracteres, ingresaste {name.Length}");
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using Quicker.Domain.Abstracts;
-using System;
+﻿using System;
+using Quicker.Domain.Abstracts;
 
-namespace Domain.Contexts.QuestionBoundedContext.Core
+namespace Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot
 {
     public class QuestionVote : Entity<Guid>
     {
