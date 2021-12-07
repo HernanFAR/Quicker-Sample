@@ -1,10 +1,10 @@
-﻿using System;
-using Domain.Contexts.AnswerBoundedContext.Core.AnswerAggregateRoot;
+﻿using Domain.Contexts.AnswerBoundedContext.Core.AnswerAggregateRoot;
 using Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot;
 using Domain.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Quicker.Domain.DataAccess.Repositories;
 using Quicker.Infrastructure.EntityFramework.Abstracts;
+using System;
 
 namespace Infrastructure.DataAccess
 {
