@@ -26,7 +26,10 @@ namespace Domain.Contexts.AnswerBoundedContext.Core.AnswerAggregateRoot
     //
     public sealed class Answer : CUDRUserAuditedAggregateRoot<Guid, Guid?>
     {
-        private Answer() : base(Guid.NewGuid()) { }
+        private Answer() : base(Guid.NewGuid())
+        {
+            Name = string.Empty;
+        }
 
         private Answer(string name, Guid toQuestionId, Guid? toAnswerId, Guid createdBy) : this()
         {
