@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
+using Microsoft.AspNetCore.Identity;
 
-namespace Domain.Contexts.UserBoundedContext
+namespace Domain.Contexts.UserBoundedContext.Core
 {
     public class ApplicationRole : IdentityRole<Guid>
     {
