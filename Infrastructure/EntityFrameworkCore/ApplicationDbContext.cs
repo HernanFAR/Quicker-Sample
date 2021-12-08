@@ -1,6 +1,6 @@
 ﻿using Domain.Contexts.AnswerBoundedContext.Core.AnswerAggregateRoot;
 using Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot;
-using Domain.Contexts.UserBoundedContext;
+using Domain.Contexts.UserBoundedContext.Core;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
