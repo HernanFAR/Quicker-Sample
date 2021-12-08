@@ -25,7 +25,7 @@ namespace Domain.Contexts.UserBoundedContext.Core
             SubName = string.Empty;
         }
 
-        internal ApplicationUser(ApplicationUserCreateBuilder createBuilder) : base()
+        internal ApplicationUser(ApplicationUserCreateBuilder createBuilder) : this()
         {
             Id = createBuilder.Id;
             Name = createBuilder.Name;
