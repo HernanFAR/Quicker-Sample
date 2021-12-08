@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot;
-using Domain.Contexts.QuestionBoundedContext.ETOs;
-using System.Linq;
-using Domain.Contexts.AnswerBoundedContext.ETOs;
+﻿using Domain.Contexts.AnswerBoundedContext.ETOs;
 using Domain.Contexts.AnswerBoundedContext.Validators;
 using Domain.Contexts.SharedBoundedContext.ValueObjects;
+using FluentValidation;
 using Quicker.Domain;
 using Quicker.Domain.Abstracts.Audited.AggregateRoots.CUDRAudited;
-using Domain.Contexts.QuestionBoundedContext.Validators;
-using FluentValidation;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Domain.Contexts.AnswerBoundedContext.Core.AnswerAggregateRoot
 {
@@ -31,7 +28,7 @@ namespace Domain.Contexts.AnswerBoundedContext.Core.AnswerAggregateRoot
             Name = string.Empty;
         }
 
-        private Answer(string name, Guid toQuestionId, Guid? toAnswerId, Guid createdBy) : this()
+        public Answer(string name, Guid toQuestionId, Guid? toAnswerId, Guid createdBy) : this()
         {
             Name = name;
             QuestionId = toQuestionId;
@@ -41,9 +38,9 @@ namespace Domain.Contexts.AnswerBoundedContext.Core.AnswerAggregateRoot
         }
 
         public string Name { get; private set; }
-        
+
         public Guid QuestionId { get; private set; }
-        
+
         public Guid? AnswerId { get; private set; }
 
         public VoteDetail CurrentVotes { get; private set; } = new(0, 0);
@@ -76,78 +73,18 @@ namespace Domain.Contexts.AnswerBoundedContext.Core.AnswerAggregateRoot
             CurrentVotes = new VoteDetail(upVotes, downVotes);
         }
 
+        public void UpdateInformation(string name, Guid updatedBy)
+        {
+            Name = name;
+
+            Update(updatedBy);
+        }
+
         public override void Validate()
         {
             var validator = new AnswerValidator();
 
             validator.ValidateAndThrow(this);
-        }
-
-        public EditBuilder EditAnswer(Guid updatedBy) => new(this, updatedBy);
-
-        public class EditBuilder
-        {
-            internal readonly Answer _CurrentState;
-
-            internal string _Name = string.Empty;
-            internal Guid _UpdatedBy;
-
-            internal EditBuilder(Answer answer, Guid updatedBy)
-            {
-                _CurrentState = answer;
-                _UpdatedBy = updatedBy;
-            }
-
-            public EditBuilder SetNewName(string name)
-            {
-                _Name = name;
-
-                return this;
-            }
-            
-            public void SetValues()
-            {
-                _CurrentState.Name = _Name;
-
-                _CurrentState.Update(_UpdatedBy);
-            }
-        }
-
-        public class CreateBuilder
-        {
-            internal string _Name = string.Empty;
-            internal Guid _CreatedBy;
-            internal Guid _ToQuestion;
-            internal Guid? _ToAnswer;
-
-            public CreateBuilder(Guid createdBy)
-            {
-                _CreatedBy = createdBy;
-            }
-
-            public CreateBuilder WithName(string name)
-            {
-                _Name = name;
-
-                return this;
-            }
-
-            public CreateBuilder ToQuestion(Guid questionId)
-            {
-                _ToQuestion = questionId;
-
-                return this;
-            }
-
-            public CreateBuilder ToAnswer(Guid answerId)
-            {
-                _ToAnswer = answerId;
-
-                return this;
-            }
-
-            public Answer Create() => 
-                new(_Name, _ToQuestion, _ToAnswer, _CreatedBy);
         }
     }
 }

@@ -20,11 +20,7 @@ namespace Domain.UnitTests.Contexts.AnswerBoundedContext.Core
             var questionId = Guid.NewGuid();
             var answerId = Guid.NewGuid();
 
-            var answer = new Answer.CreateBuilder(createdBy)
-                .ToQuestion(questionId)
-                .ToAnswer(answerId)
-                .WithName(name)
-                .Create();
+            var answer = new Answer(name, questionId, answerId, createdBy);
 
             answer.Id.Should().NotBe(default(Guid));
             answer.Name.Should().Be(name);
@@ -44,16 +40,11 @@ namespace Domain.UnitTests.Contexts.AnswerBoundedContext.Core
 
             const string newName = "newName";
 
-            var answer = new Answer.CreateBuilder(createdBy)
-                .ToQuestion(questionId)
-                .WithName(name)
-                .Create();
+            var answer = new Answer(name, questionId, null, createdBy);
 
             var answerId = answer.Id;
 
-            answer.EditAnswer(updatedBy)
-                .SetNewName(newName)
-                .SetValues();
+            answer.UpdateInformation(newName, updatedBy);
 
             answer.Id.Should().Be(answerId);
             answer.Name.Should().Be(newName);
@@ -71,10 +62,7 @@ namespace Domain.UnitTests.Contexts.AnswerBoundedContext.Core
             var createdBy = Guid.NewGuid();
             var questionId = Guid.NewGuid();
 
-            var answer = new Answer.CreateBuilder(createdBy)
-                .ToQuestion(questionId)
-                .WithName(name)
-                .Create();
+            var answer = new Answer(name, questionId, null, createdBy);
 
             VoteDetail details = answer.CurrentVotes;
 
@@ -96,10 +84,7 @@ namespace Domain.UnitTests.Contexts.AnswerBoundedContext.Core
             const int expCount = 1;
             const int expEventsCount = 1;
 
-            var answer = new Answer.CreateBuilder(createdBy)
-                .ToQuestion(questionId)
-                .WithName(name)
-                .Create();
+            var answer = new Answer(name, questionId, null, createdBy);
 
             answer.SetVote(votedBy, isUp);
 
@@ -124,10 +109,7 @@ namespace Domain.UnitTests.Contexts.AnswerBoundedContext.Core
             const int expVotesCount = 1;
             const int expEventsCount = 2;
 
-            var answer = new Answer.CreateBuilder(createdBy)
-                .ToQuestion(questionId)
-                .WithName(name)
-                .Create();
+            var answer = new Answer(name, questionId, null, createdBy);
 
             answer.SetVote(votedBy, isUp);
             answer.SetVote(votedBy, newIsUp);
@@ -150,10 +132,7 @@ namespace Domain.UnitTests.Contexts.AnswerBoundedContext.Core
             const int expDownVotes = 1;
             const int expDeltaOfVotes = expUpVotes - expDownVotes;
 
-            var answer = new Answer.CreateBuilder(createdBy)
-                .ToQuestion(questionId)
-                .WithName(name)
-                .Create();
+            var answer = new Answer(name, questionId, null, createdBy);
 
             answer.SetVote(Guid.NewGuid(), true);
             answer.SetVote(Guid.NewGuid(), true);
@@ -175,10 +154,7 @@ namespace Domain.UnitTests.Contexts.AnswerBoundedContext.Core
             var createdBy = Guid.NewGuid();
             var questionId = Guid.NewGuid();
 
-            var answer = new Answer.CreateBuilder(createdBy)
-                .ToQuestion(questionId)
-                .WithName(name)
-                .Create();
+            var answer = new Answer(name, questionId, null, createdBy);
 
             answer.Validate();
 
@@ -194,10 +170,7 @@ namespace Domain.UnitTests.Contexts.AnswerBoundedContext.Core
 
             const int expCount = 1;
 
-            var answer = new Answer.CreateBuilder(createdBy)
-                .ToQuestion(questionId)
-                .WithName(name!)
-                .Create();
+            var answer = new Answer(name, questionId, null, createdBy);
 
             Action act = () => answer.Validate();
 

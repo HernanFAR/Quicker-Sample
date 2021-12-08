@@ -1,10 +1,7 @@
 ﻿using Domain.Contexts.AnswerBoundedContext.Core.AnswerAggregateRoot;
-using Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot;
-using Domain.Contexts.QuestionBoundedContext.Validators;
-using FluentAssertions;
-using FluentValidation;
-using System;
 using Domain.Contexts.AnswerBoundedContext.Validators;
+using FluentAssertions;
+using System;
 using Xunit;
 
 namespace Domain.UnitTests.Contexts.AnswerBoundedContext.Validations
@@ -19,11 +16,8 @@ namespace Domain.UnitTests.Contexts.AnswerBoundedContext.Validations
             var questionId = Guid.NewGuid();
             var answerId = Guid.NewGuid();
 
-            var answer = new Answer.CreateBuilder(createdBy)
-                .ToQuestion(questionId)
-                .ToAnswer(answerId)
-                .WithName(name)
-                .Create();
+            var answer = new Answer(name, questionId, answerId, createdBy);
+
             var validator = new AnswerValidator();
 
             var result = validator.Validate(answer);
@@ -43,11 +37,8 @@ namespace Domain.UnitTests.Contexts.AnswerBoundedContext.Validations
 
             const int expCount = 1;
 
-            var answer = new Answer.CreateBuilder(createdBy)
-                .ToQuestion(questionId)
-                .ToAnswer(answerId)
-                .WithName(name!)
-                .Create();
+            var answer = new Answer(name!, questionId, answerId, createdBy);
+
             var validator = new AnswerValidator();
 
             var result = validator.Validate(answer);
@@ -68,11 +59,7 @@ namespace Domain.UnitTests.Contexts.AnswerBoundedContext.Validations
 
             const int expCount = 1;
 
-            var answer = new Answer.CreateBuilder(createdBy)
-                .ToQuestion(questionId)
-                .ToAnswer(answerId)
-                .WithName(name)
-                .Create();
+            var answer = new Answer(name, questionId, answerId, createdBy);
             var validator = new AnswerValidator();
 
             var result = validator.Validate(answer);
