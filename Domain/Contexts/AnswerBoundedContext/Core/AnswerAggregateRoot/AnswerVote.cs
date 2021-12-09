@@ -1,11 +1,13 @@
-﻿using System;
-using Quicker.Domain.Abstracts;
+﻿using Quicker.Domain.Abstracts;
+using System;
 
 namespace Domain.Contexts.AnswerBoundedContext.Core.AnswerAggregateRoot
 {
     public class AnswerVote : Entity<Guid>
     {
-        public AnswerVote(bool isUp, Guid votedBy) : base(Guid.NewGuid())
+        private AnswerVote() : base(Guid.NewGuid()) { }
+
+        public AnswerVote(bool isUp, Guid votedBy) : this()
         {
             By = votedBy;
             IsUp = isUp;
