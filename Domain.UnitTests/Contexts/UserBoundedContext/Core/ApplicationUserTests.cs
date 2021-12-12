@@ -2,6 +2,7 @@
 using System.Text;
 using Domain.Contexts.UserBoundedContext.Builders;
 using FluentAssertions;
+using FluentValidation;
 using Xunit;
 
 namespace Domain.UnitTests.Contexts.UserBoundedContext.Core
@@ -247,6 +248,48 @@ namespace Domain.UnitTests.Contexts.UserBoundedContext.Core
             applicationUser.UserName.Should().Be(userName);
             applicationUser.Email.Should().Be(email);
             applicationUser.PhoneNumber.Should().Be(newPhoneNumber);
+        }
+
+        [Fact]
+        public void Validate_Failure_Should_ThrowValidationException_Detail_InvalidEntity()
+        {
+            const string name = "name";
+            const string subName = "subName";
+            const string userName = "userName";
+            const string email = "email";
+            const string phoneNumber = "phoneNumber";
+
+            var applicationUser = ApplicationUserCreateBuilder.Create
+                .WithRandomId().WithEmail(email)
+                .WithName(name).WithUserName(userName)
+                .Continue
+                .WithPhoneNumber(phoneNumber).WithSubName(subName)
+                .GetInstance;
+            
+            Action act = () => applicationUser.Validate();
+
+            act.Should().ThrowExactly<ValidationException>();
+        }
+
+        [Fact]
+        public void Validate_Success_Should_ThrowValidationException_Detail_InvalidEntity()
+        {
+            const string name = "name";
+            const string subName = "subName";
+            const string userName = "userName";
+            const string email = "email@email.com";
+            const string phoneNumber = "phoneNumber";
+
+            var applicationUser = ApplicationUserCreateBuilder.Create
+                .WithRandomId().WithEmail(email)
+                .WithName(name).WithUserName(userName)
+                .Continue
+                .WithPhoneNumber(phoneNumber).WithSubName(subName)
+                .GetInstance;
+            
+            applicationUser.Validate();
+
+            true.Should().BeTrue();
         }
     }
 }

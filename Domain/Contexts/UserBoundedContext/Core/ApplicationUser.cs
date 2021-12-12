@@ -3,6 +3,12 @@ using Microsoft.AspNetCore.Identity;
 using Quicker.Domain.Interfaces.Abstracts;
 using Quicker.Domain.Interfaces.Abstracts.Audited.Entities.ICUDRAudited;
 using System;
+using System.Collections.Generic;
+using Quicker.Domain;
+using Quicker.Domain.Interfaces.Abstracts.Audited.AggregateRoots.ICUDRAudited;
+using System.Collections.ObjectModel;
+using Domain.Contexts.UserBoundedContext.Validators;
+using FluentValidation;
 
 namespace Domain.Contexts.UserBoundedContext.Core
 {
@@ -17,7 +23,7 @@ namespace Domain.Contexts.UserBoundedContext.Core
     // Esta clase es pequeña y perfectamente pudo hacerse con constructor publico, pero por ejemplificar el uso de
     // un Builder, se hizo con este patrón.
     //
-    public sealed class ApplicationUser : IdentityUser<Guid>, ICUDRAuditedEntity<Guid>
+    public sealed class ApplicationUser : IdentityUser<Guid>, ICUDRAuditedAggregateRoot<Guid>
     {
         private ApplicationUser()
         {
@@ -93,5 +99,21 @@ namespace Domain.Contexts.UserBoundedContext.Core
         public DateTime? ReactivatedDate { get; private set; }
 
         public bool Inactive { get; private set; }
+
+
+        private readonly ICollection<EventInformation> _Events = new Collection<EventInformation>();
+
+        public IEnumerable<EventInformation> GetEvents() => _Events;
+
+        public void AddEvent(EventInformation eventData) => _Events.Add(eventData);
+
+        public void ClearEvents() => _Events.Clear();
+
+        public void Validate()
+        {
+            var validator = new ApplicationUserValidator();
+
+            validator.ValidateAndThrow(this);
+        }
     }
 }

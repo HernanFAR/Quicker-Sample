@@ -14,6 +14,21 @@ namespace Domain.Contexts.UserBoundedContext.Constants
             public const int MaxLength = 256;
         }
 
+        public class UserNameProperty
+        {
+            public const int MaxLength = 256;
+        }
+
+        public class EmailProperty
+        {
+            public const int MaxLength = 256;
+        }
+
+        public class PhoneNumberProperty
+        {
+            public const int MaxLength = 32;
+        }
+
         public class AdminEntity
         {
             public static readonly Guid Id = Guid.Parse("6EC427E5-63C4-4687-BFF0-153E21C06D30");
