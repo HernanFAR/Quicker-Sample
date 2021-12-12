@@ -1,8 +1,9 @@
 ﻿using System;
+using MediatR;
 
 namespace Domain.Contexts.AnswerBoundedContext.ETOs
 {
-    public class AnswerVotesHasChangedETO
+    public class AnswerVotesHasChangedETO : INotification
     {
         public AnswerVotesHasChangedETO(Guid answerId)
         {
