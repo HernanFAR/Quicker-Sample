@@ -1,15 +1,14 @@
 ﻿using Domain.Contexts.UserBoundedContext.Builders;
-using Microsoft.AspNetCore.Identity;
-using Quicker.Domain.Interfaces.Abstracts;
-using Quicker.Domain.Interfaces.Abstracts.Audited.Entities.ICUDRAudited;
-using System;
-using System.Collections.Generic;
-using Quicker.Domain;
-using Quicker.Domain.Interfaces.Abstracts.Audited.AggregateRoots.ICUDRAudited;
-using System.Collections.ObjectModel;
 using Domain.Contexts.UserBoundedContext.ETOs;
 using Domain.Contexts.UserBoundedContext.Validators;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
+using Quicker.Domain;
+using Quicker.Domain.Interfaces.Abstracts;
+using Quicker.Domain.Interfaces.Abstracts.Audited.AggregateRoots.ICUDRAudited;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Domain.Contexts.UserBoundedContext.Core
 {
@@ -20,9 +19,6 @@ namespace Domain.Contexts.UserBoundedContext.Core
     // Sin embargo, van a haber algunos casos en donde usar constructores puede ser tedioso, y no respetar
     // apropiadamente el lenguaje ubicuo (Ubicuous Language) por tener muchísimos parametros. En estos casos,
     // puedes usar un Builder para instanciar o modificar la instancia.
-    //
-    // Esta clase es pequeña y perfectamente pudo hacerse con constructor publico, pero por ejemplificar el uso de
-    // un Builder, se hizo con este patrón.
     //
     public sealed class ApplicationUser : IdentityUser<Guid>, ICUDRAuditedAggregateRoot<Guid>
     {
