@@ -16,5 +16,12 @@ namespace Infrastructure.EntityFrameworkCore
         public DbSet<Question> Questions => Set<Question>();
 
         public DbSet<Answer> Answers => Set<Answer>();
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.ApplyConfigurationsWithContext(this);
+        }
     }
 }
