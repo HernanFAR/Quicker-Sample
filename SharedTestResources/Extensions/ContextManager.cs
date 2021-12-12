@@ -1,16 +1,14 @@
 ﻿using System;
-using Infrastructure.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
+using Infrastructure.EntityFrameworkCore;
 using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace SharedTestResources
+namespace SharedTestResources.Extensions
 {
-    public static class ApplicationDbContextExtensions
+    public static class ContextManager
     {
         public static ApplicationDbContext CreateContext(Guid contextId, IEnumerable<IInterceptor>? interceptors = null)
         {
