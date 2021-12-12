@@ -1,11 +1,9 @@
 ﻿using Domain.Contexts.AnswerBoundedContext.Core.AnswerAggregateRoot;
 using Domain.Contexts.AnswerBoundedContext.ETOs;
-using Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot;
-using Domain.Contexts.QuestionBoundedContext.ETOs;
 using Domain.Contexts.SharedBoundedContext.ValueObjects;
 using FluentAssertions;
-using System;
 using FluentValidation;
+using System;
 using Xunit;
 
 namespace Domain.UnitTests.Contexts.AnswerBoundedContext.Core

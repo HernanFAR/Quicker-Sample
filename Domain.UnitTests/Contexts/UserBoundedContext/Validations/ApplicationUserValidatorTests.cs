@@ -1,12 +1,8 @@
-﻿using Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot;
-using Domain.Contexts.QuestionBoundedContext.Validators;
-using Domain.Contexts.UserBoundedContext.Builders;
-using FluentAssertions;
-using System;
-using Domain.Contexts.UserBoundedContext.Validators;
-using Microsoft.Extensions.Hosting.Internal;
-using Xunit;
+﻿using Domain.Contexts.UserBoundedContext.Builders;
 using Domain.Contexts.UserBoundedContext.Constants;
+using Domain.Contexts.UserBoundedContext.Validators;
+using FluentAssertions;
+using Xunit;
 
 namespace Domain.UnitTests.Contexts.UserBoundedContext.Validations
 {

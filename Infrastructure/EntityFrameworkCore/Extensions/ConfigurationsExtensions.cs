@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 // ReSharper disable once CheckNamespace
 
@@ -33,7 +30,7 @@ namespace Infrastructure.EntityFrameworkCore
                 var genericArgument = entityType.GetInterfaces()
                     .Single(e => e.IsGenericType && e.GetGenericTypeDefinition() == _EntityTypeGeneric)
                     .GenericTypeArguments[0];
-                
+
                 var target = applyEntityConfigurationMethod.MakeGenericMethod(genericArgument);
                 target.Invoke(@this, new[] { Activator.CreateInstance(entityType, context) });
             }

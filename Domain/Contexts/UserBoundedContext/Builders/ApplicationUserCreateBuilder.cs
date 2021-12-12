@@ -1,12 +1,12 @@
-﻿using System;
-using Domain.Contexts.UserBoundedContext.Core;
+﻿using Domain.Contexts.UserBoundedContext.Core;
+using System;
 
 namespace Domain.Contexts.UserBoundedContext.Builders
 {
     public class ApplicationUserCreateBuilder : IAppUserIdentifierCreateBuilder, IAppUserMandatoryInfoCreateBuilder, IAppUserOptionalInfoCreateBuilder
     {
         internal Guid Id;
-        
+
         internal string Name = string.Empty;
         internal string UserName = string.Empty;
         internal string Email = string.Empty;

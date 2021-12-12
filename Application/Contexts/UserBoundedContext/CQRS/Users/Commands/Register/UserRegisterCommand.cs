@@ -1,5 +1,5 @@
-﻿using System;
-using Quicker.Infrastructure.MediatR.Request;
+﻿using Quicker.Infrastructure.MediatR.Request;
+using System;
 
 namespace Application.Contexts.UserBoundedContext.CQRS.Users.Commands.Register
 {

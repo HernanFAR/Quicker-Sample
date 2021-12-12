@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Domain.Contexts.QuestionBoundedContext.ETOs;
+﻿using Domain.Contexts.QuestionBoundedContext.ETOs;
 using Domain.Contexts.QuestionBoundedContext.Validators;
 using Domain.Contexts.SharedBoundedContext.ValueObjects;
 using FluentValidation;
 using Quicker.Domain;
 using Quicker.Domain.Abstracts.Audited.AggregateRoots.CUDRAudited;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot
 {

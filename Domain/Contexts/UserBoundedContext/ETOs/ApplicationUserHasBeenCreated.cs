@@ -1,5 +1,5 @@
-﻿using System;
-using MediatR;
+﻿using MediatR;
+using System;
 
 namespace Domain.Contexts.UserBoundedContext.ETOs
 {

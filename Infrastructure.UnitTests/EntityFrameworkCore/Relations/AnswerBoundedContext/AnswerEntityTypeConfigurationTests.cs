@@ -1,23 +1,16 @@
-﻿using Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot;
-using Domain.Contexts.QuestionBoundedContext.Validators;
-using FluentValidation.Validators;
-using Infrastructure.EntityFrameworkCore;
-using Infrastructure.EntityFrameworkCore.Relations.QuestionBoundedContext;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
-using Microsoft.EntityFrameworkCore;
-using SharedTestResources.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Contexts.AnswerBoundedContext.Constants;
+﻿using Domain.Contexts.AnswerBoundedContext.Constants;
 using Domain.Contexts.AnswerBoundedContext.Core.AnswerAggregateRoot;
 using Domain.Contexts.AnswerBoundedContext.Validators;
 using FluentAssertions;
+using FluentValidation.Validators;
+using Infrastructure.EntityFrameworkCore;
 using Infrastructure.EntityFrameworkCore.Relations.AnswerBoundedContext;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using SharedTestResources.Extensions;
+using System;
+using System.Linq;
 using Xunit;
-using Domain.Contexts.QuestionBoundedContext.Constants;
 
 namespace Infrastructure.UnitTests.EntityFrameworkCore.Relations.AnswerBoundedContext
 {

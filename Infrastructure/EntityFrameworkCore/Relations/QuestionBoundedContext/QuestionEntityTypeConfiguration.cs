@@ -1,5 +1,4 @@
-﻿using System;
-using Domain.Contexts.AnswerBoundedContext.Constants;
+﻿using Domain.Contexts.AnswerBoundedContext.Constants;
 using Domain.Contexts.QuestionBoundedContext.Constants;
 using Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot;
 using Domain.Contexts.SharedBoundedContext.ValueObjects;
@@ -7,6 +6,7 @@ using Domain.Contexts.UserBoundedContext.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace Infrastructure.EntityFrameworkCore.Relations.QuestionBoundedContext
 {
@@ -49,7 +49,7 @@ namespace Infrastructure.EntityFrameworkCore.Relations.QuestionBoundedContext
             builder.ConfigureUpdatedDate<Question, Guid?>();
             builder.ConfigureDeactivatedDate<Question, Guid?>();
             builder.ConfigureReactivatedDate<Question, Guid?>();
-            
+
             builder.OwnsOne(e => e.CurrentVotes, CurrentVoteEntityType);
 
             builder.OwnsMany(e => e.Votes, QuestionVoteEntityType);

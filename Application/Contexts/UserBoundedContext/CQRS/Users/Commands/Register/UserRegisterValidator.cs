@@ -1,10 +1,9 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Domain.Contexts.UserBoundedContext.Constants;
+﻿using Domain.Contexts.UserBoundedContext.Constants;
 using FluentValidation;
 using Infrastructure.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Contexts.UserBoundedContext.CQRS.Users.Commands.Register
 {

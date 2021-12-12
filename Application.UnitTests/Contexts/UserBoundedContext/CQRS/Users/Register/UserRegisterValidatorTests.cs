@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Application.Contexts.UserBoundedContext.CQRS.Users.Commands.Register;
+﻿using Application.Contexts.UserBoundedContext.CQRS.Users.Commands.Register;
 using Domain.Contexts.UserBoundedContext.Constants;
 using Domain.Contexts.UserBoundedContext.Core;
 using FluentAssertions;
 using Infrastructure.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SharedTestResources.Extensions;
+using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
@@ -38,9 +34,9 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
         {
             const string name = "Name";
             const string userName = "userName";
-            const string email = "email@email.com"; 
-            const string phoneNumber = "+569 4979 8355"; 
-            const string subName = "subName"; 
+            const string email = "email@email.com";
+            const string phoneNumber = "+569 4979 8355";
+            const string subName = "subName";
 
             var command = new UserRegisterCommand
             {

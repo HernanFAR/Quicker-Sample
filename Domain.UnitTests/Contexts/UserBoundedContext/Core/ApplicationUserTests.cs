@@ -1,10 +1,8 @@
-﻿using System;
-using System.Text;
-using Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot;
-using Domain.Contexts.UserBoundedContext.Builders;
+﻿using Domain.Contexts.UserBoundedContext.Builders;
 using Domain.Contexts.UserBoundedContext.ETOs;
 using FluentAssertions;
 using FluentValidation;
+using System;
 using Xunit;
 
 namespace Domain.UnitTests.Contexts.UserBoundedContext.Core
@@ -37,7 +35,7 @@ namespace Domain.UnitTests.Contexts.UserBoundedContext.Core
             applicationUser.PhoneNumber.Should().Be(phoneNumber);
 
             applicationUser.GetEvents().Should().HaveCount(expEventCount);
-            applicationUser.GetEvents().Should().ContainSingle(e => e.AfterSave && ((ApplicationUserHasBeenCreated)e.EventData).ApplicationUserId == applicationUser.Id); 
+            applicationUser.GetEvents().Should().ContainSingle(e => e.AfterSave && ((ApplicationUserHasBeenCreated)e.EventData).ApplicationUserId == applicationUser.Id);
         }
 
         [Fact]
@@ -147,7 +145,7 @@ namespace Domain.UnitTests.Contexts.UserBoundedContext.Core
             const string userName = "userName";
             const string email = "email";
             const string phoneNumber = "phoneNumber";
-            
+
             const string newSubName = "newSubName";
 
             var applicationUser = ApplicationUserCreateBuilder.Create
@@ -179,7 +177,7 @@ namespace Domain.UnitTests.Contexts.UserBoundedContext.Core
             const string userName = "userName";
             const string email = "email";
             const string phoneNumber = "phoneNumber";
-            
+
             const string newUserName = "newUserName";
 
             var applicationUser = ApplicationUserCreateBuilder.Create
@@ -209,7 +207,7 @@ namespace Domain.UnitTests.Contexts.UserBoundedContext.Core
             const string userName = "userName";
             const string email = "email";
             const string phoneNumber = "phoneNumber";
-            
+
             const string newEmail = "newEmail";
 
             var applicationUser = ApplicationUserCreateBuilder.Create
@@ -240,7 +238,7 @@ namespace Domain.UnitTests.Contexts.UserBoundedContext.Core
             const string userName = "userName";
             const string email = "email";
             const string phoneNumber = "phoneNumber";
-            
+
             const string newPhoneNumber = "newPhoneNumber";
 
             var applicationUser = ApplicationUserCreateBuilder.Create
@@ -277,7 +275,7 @@ namespace Domain.UnitTests.Contexts.UserBoundedContext.Core
                 .Continue
                 .WithPhoneNumber(phoneNumber).WithSubName(subName)
                 .GetInstance;
-            
+
             Action act = () => applicationUser.Validate();
 
             act.Should().ThrowExactly<ValidationException>();
@@ -298,7 +296,7 @@ namespace Domain.UnitTests.Contexts.UserBoundedContext.Core
                 .Continue
                 .WithPhoneNumber(phoneNumber).WithSubName(subName)
                 .GetInstance;
-            
+
             applicationUser.Validate();
 
             true.Should().BeTrue();
