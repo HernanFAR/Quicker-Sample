@@ -10,17 +10,6 @@ using System.Linq;
 
 namespace Domain.Contexts.AnswerBoundedContext.Core.AnswerAggregateRoot
 {
-    // Acá, hay algo que mencionar
-    // Si te fijas, en Question se usaron constructores para instanciar, esto es debido a que en la mayoría de los
-    // casos es el modo más rápido y apropiado.
-    //
-    // Sin embargo, van a haber algunos casos en donde usar constructores puede ser tedioso, y no respetar
-    // apropiadamente el lenguaje ubicuo (Ubicuous Language) por tener muchisimos parametros. En estos casos,
-    // puedes usar un Builder para instanciar o modificar la instancia.
-    //
-    // Esta clase es pequeña y perfectamente pudo hacerse con constructor publico, pero por ejemplificar el uso de
-    // un Builder, se hizo con este patrón.
-    //
     public sealed class Answer : CUDRUserAuditedAggregateRoot<Guid, Guid?>
     {
         private Answer() : base(Guid.NewGuid())
