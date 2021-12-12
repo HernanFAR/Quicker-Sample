@@ -11,11 +11,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Domain.Contexts.AnswerBoundedContext.Constants;
 using Domain.Contexts.AnswerBoundedContext.Core.AnswerAggregateRoot;
 using Domain.Contexts.AnswerBoundedContext.Validators;
 using FluentAssertions;
 using Infrastructure.EntityFrameworkCore.Relations.AnswerBoundedContext;
 using Xunit;
+using Domain.Contexts.QuestionBoundedContext.Constants;
 
 namespace Infrastructure.UnitTests.EntityFrameworkCore.Relations.AnswerBoundedContext
 {
@@ -26,6 +28,23 @@ namespace Infrastructure.UnitTests.EntityFrameworkCore.Relations.AnswerBoundedCo
         public void Dispose()
         {
             _Context.Dispose();
+        }
+
+        [Fact]
+        public void TableInfo_Success_ShouldHaveCorrectNameAndSchema()
+        {
+            var conventionSet = ConventionSet.CreateConventionSet(_Context);
+
+            var modelBuilder = new ModelBuilder(conventionSet);
+            var questionBuilder = modelBuilder.Entity<Answer>();
+
+            new AnswerEntityTypeConfiguration(_Context).Configure(questionBuilder);
+
+            questionBuilder.Metadata.GetTableName()
+                .Should().Be(nameof(Answer));
+
+            questionBuilder.Metadata.GetSchema()
+                .Should().Be(AnswerDatabaseConstants.Schema);
         }
 
         [Fact]

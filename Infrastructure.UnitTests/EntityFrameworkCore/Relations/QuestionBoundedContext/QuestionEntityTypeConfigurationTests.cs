@@ -1,14 +1,20 @@
 ﻿using Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot;
 using Domain.Contexts.QuestionBoundedContext.Validators;
+using Domain.Contexts.UserBoundedContext.Constants;
+using Domain.Contexts.UserBoundedContext.Core;
 using FluentAssertions;
 using FluentValidation.Validators;
 using Infrastructure.EntityFrameworkCore;
 using Infrastructure.EntityFrameworkCore.Relations.QuestionBoundedContext;
+using Infrastructure.EntityFrameworkCore.Relations.UserBoundedContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using SharedTestResources.Extensions;
 using System;
 using System.Linq;
+using Domain.Contexts.AnswerBoundedContext.Core.AnswerAggregateRoot;
+using Domain.Contexts.QuestionBoundedContext.Constants;
+using Infrastructure.EntityFrameworkCore.Relations.AnswerBoundedContext;
 using Xunit;
 
 namespace Infrastructure.UnitTests.EntityFrameworkCore.Relations.QuestionBoundedContext
@@ -20,6 +26,23 @@ namespace Infrastructure.UnitTests.EntityFrameworkCore.Relations.QuestionBounded
         public void Dispose()
         {
             _Context.Dispose();
+        }
+
+        [Fact]
+        public void TableInfo_Success_ShouldHaveCorrectNameAndSchema()
+        {
+            var conventionSet = ConventionSet.CreateConventionSet(_Context);
+
+            var modelBuilder = new ModelBuilder(conventionSet);
+            var questionBuilder = modelBuilder.Entity<Question>();
+
+            new QuestionEntityTypeConfiguration(_Context).Configure(questionBuilder);
+
+            questionBuilder.Metadata.GetTableName()
+                .Should().Be(nameof(Question));
+
+            questionBuilder.Metadata.GetSchema()
+                .Should().Be(QuestionDatabaseConstants.Schema);
         }
 
         [Fact]

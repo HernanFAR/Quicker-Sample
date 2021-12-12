@@ -38,6 +38,23 @@ namespace Infrastructure.UnitTests.EntityFrameworkCore.Relations.UserBoundedCont
         }
 
         [Fact]
+        public void TableInfo_Success_ShouldHaveCorrectNameAndSchema()
+        {
+            var conventionSet = ConventionSet.CreateConventionSet(_Context);
+
+            var modelBuilder = new ModelBuilder(conventionSet);
+            var questionBuilder = modelBuilder.Entity<ApplicationUser>();
+
+            new ApplicationUserEntityTypeConfiguration(_Context).Configure(questionBuilder);
+
+            questionBuilder.Metadata.GetTableName()
+                .Should().Be(nameof(ApplicationUser));
+
+            questionBuilder.Metadata.GetSchema()
+                .Should().Be(UserDatabaseConstants.Schema);
+        }
+
+        [Fact]
         public void NameProperty_Success_Should_FieldValidationsMustBeTheSameAsFluentValidation()
         {
             var conventionSet = ConventionSet.CreateConventionSet(_Context);
