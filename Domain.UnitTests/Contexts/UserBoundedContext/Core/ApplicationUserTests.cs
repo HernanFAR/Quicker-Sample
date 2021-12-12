@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
+using Domain.Contexts.QuestionBoundedContext.Core.QuestionAggregateRoot;
 using Domain.Contexts.UserBoundedContext.Builders;
+using Domain.Contexts.UserBoundedContext.ETOs;
 using FluentAssertions;
 using FluentValidation;
 using Xunit;
@@ -18,6 +20,8 @@ namespace Domain.UnitTests.Contexts.UserBoundedContext.Core
             const string email = "email";
             const string phoneNumber = "phoneNumber";
 
+            const int expEventCount = 1;
+
             var applicationUser = ApplicationUserCreateBuilder.Create
                 .WithRandomId().WithEmail(email)
                 .WithName(name).WithUserName(userName)
@@ -31,6 +35,9 @@ namespace Domain.UnitTests.Contexts.UserBoundedContext.Core
             applicationUser.UserName.Should().Be(userName);
             applicationUser.Email.Should().Be(email);
             applicationUser.PhoneNumber.Should().Be(phoneNumber);
+
+            applicationUser.GetEvents().Should().HaveCount(expEventCount);
+            applicationUser.GetEvents().Should().ContainSingle(e => e.AfterSave && ((ApplicationUserHasBeenCreated)e.EventData).ApplicationUserId == applicationUser.Id); 
         }
 
         [Fact]
@@ -42,6 +49,8 @@ namespace Domain.UnitTests.Contexts.UserBoundedContext.Core
             const string userName = "userName";
             const string email = "email";
             const string phoneNumber = "phoneNumber";
+
+            const int expEventCount = 1;
 
             var applicationUser = ApplicationUserCreateBuilder.Create
                 .WithId(id).WithEmail(email)
@@ -56,6 +65,9 @@ namespace Domain.UnitTests.Contexts.UserBoundedContext.Core
             applicationUser.UserName.Should().Be(userName);
             applicationUser.Email.Should().Be(email);
             applicationUser.PhoneNumber.Should().Be(phoneNumber);
+
+            applicationUser.GetEvents().Should().HaveCount(expEventCount);
+            applicationUser.GetEvents().Should().ContainSingle(e => e.AfterSave && ((ApplicationUserHasBeenCreated)e.EventData).ApplicationUserId == applicationUser.Id);
         }
 
         [Fact]

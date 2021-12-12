@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Quicker.Domain;
 using Quicker.Domain.Interfaces.Abstracts.Audited.AggregateRoots.ICUDRAudited;
 using System.Collections.ObjectModel;
+using Domain.Contexts.UserBoundedContext.ETOs;
 using Domain.Contexts.UserBoundedContext.Validators;
 using FluentValidation;
 
@@ -39,6 +40,8 @@ namespace Domain.Contexts.UserBoundedContext.Core
             UserName = createBuilder.UserName;
             Email = createBuilder.Email;
             PhoneNumber = createBuilder.PhoneNumber;
+
+            AddEvent(new EventInformation(new ApplicationUserHasBeenCreated(Id), true));
 
             Create();
         }
