@@ -16,7 +16,8 @@ namespace SharedTestResources.Extensions
             connection.Open();
 
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlite(connection);
+                .UseSqlite(connection)
+                .ConfigureWarnings(e => e.Ignore(RelationalEventId.AmbientTransactionWarning));
 
             if (interceptors != null && interceptors.Any())
             {
