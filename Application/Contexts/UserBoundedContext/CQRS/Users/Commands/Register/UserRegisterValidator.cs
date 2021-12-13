@@ -1,11 +1,10 @@
 ﻿using Domain.Contexts.UserBoundedContext.Constants;
 using FluentValidation;
-using Infrastructure.EntityFrameworkCore;
+using Infrastructure.EntityFrameworkCore.UserRelated;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Infrastructure.EntityFrameworkCore.UserRelated;
-using System.Text.RegularExpressions;
 
 namespace Application.Contexts.UserBoundedContext.CQRS.Users.Commands.Register
 {

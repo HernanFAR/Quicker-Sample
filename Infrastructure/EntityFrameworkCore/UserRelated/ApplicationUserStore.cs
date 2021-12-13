@@ -1,7 +1,7 @@
-﻿using System;
-using Domain.Contexts.UserBoundedContext.Core;
+﻿using Domain.Contexts.UserBoundedContext.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System;
 
 namespace Infrastructure.EntityFrameworkCore.UserRelated
 {

@@ -1,6 +1,6 @@
-﻿using Quicker.Infrastructure.MediatR.Request;
+﻿using Application.Contexts.UserBoundedContext.CQRS.Users.Interfaces;
+using Quicker.Infrastructure.MediatR.Request;
 using System;
-using Application.Contexts.UserBoundedContext.CQRS.Users.Interfaces;
 
 namespace Application.Contexts.UserBoundedContext.CQRS.Users.Commands.Register
 {

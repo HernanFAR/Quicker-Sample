@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Application.Contexts.UserBoundedContext.CQRS.Users.Commands.Register;
+﻿using Application.Contexts.UserBoundedContext.CQRS.Users.Commands.Register;
 using Domain.Contexts.UserBoundedContext.Constants;
 using Domain.Contexts.UserBoundedContext.Core;
 using FluentAssertions;
@@ -9,6 +7,8 @@ using Infrastructure.EntityFrameworkCore.UserRelated;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using SharedTestResources.Extensions;
+using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Commands.Register
@@ -70,7 +70,7 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Commands.
         public async Task Validate_Failure_Should_BeNotValid_Detail_NullName(string name)
         {
             const int expCount = 1;
-            
+
             const string userName = "userName";
             const string email = "email@email.com";
             const string phoneNumber = "+569 4979 8355";

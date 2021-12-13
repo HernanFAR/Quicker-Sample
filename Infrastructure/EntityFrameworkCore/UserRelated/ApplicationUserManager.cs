@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Domain.Contexts.UserBoundedContext.Core;
+﻿using Domain.Contexts.UserBoundedContext.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
 
 namespace Infrastructure.EntityFrameworkCore.UserRelated
 {
