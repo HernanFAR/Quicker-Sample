@@ -288,7 +288,7 @@ namespace Domain.UnitTests.Contexts.UserBoundedContext.Core
             const string subName = "subName";
             const string userName = "userName";
             const string email = "email@email.com";
-            const string phoneNumber = "phoneNumber";
+            const string phoneNumber = "+569 1234 5678";
 
             var applicationUser = ApplicationUserCreateBuilder.Create
                 .WithRandomId().WithEmail(email)
