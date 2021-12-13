@@ -2,12 +2,20 @@
 {
     public class JWTConfiguration
     {
-        public string IssuerSigningKey { get; set; } = string.Empty;
+        public JWTConfiguration(string issuerSigningKey, string issuer, string audience, double duration)
+        {
+            IssuerSigningKey = issuerSigningKey;
+            Issuer = issuer;
+            Audience = audience;
+            Duration = duration;
+        }
 
-        public string Issuer { get; set; } = string.Empty;
+        public string IssuerSigningKey { get; }
 
-        public string Audience { get; set; } = string.Empty;
+        public string Issuer { get; }
 
-        public double Duration { get; set; }
+        public string Audience { get; }
+
+        public double Duration { get; }
     }
 }
