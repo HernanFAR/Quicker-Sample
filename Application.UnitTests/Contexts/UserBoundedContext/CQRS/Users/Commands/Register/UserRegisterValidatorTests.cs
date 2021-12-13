@@ -1,17 +1,17 @@
-﻿using Application.Contexts.UserBoundedContext.CQRS.Users.Commands.Register;
+﻿using System;
+using System.Threading.Tasks;
+using Application.Contexts.UserBoundedContext.CQRS.Users.Commands.Register;
 using Domain.Contexts.UserBoundedContext.Constants;
 using Domain.Contexts.UserBoundedContext.Core;
 using FluentAssertions;
 using Infrastructure.EntityFrameworkCore;
+using Infrastructure.EntityFrameworkCore.UserRelated;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using SharedTestResources.Extensions;
-using System;
-using System.Threading.Tasks;
-using Infrastructure.EntityFrameworkCore.UserRelated;
 using Xunit;
 
-namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
+namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Commands.Register
 {
     public class UserRegisterValidatorTests : IDisposable
     {
