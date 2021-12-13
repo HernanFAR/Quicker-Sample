@@ -8,11 +8,12 @@ using Microsoft.Extensions.DependencyInjection;
 using SharedTestResources.Extensions;
 using System;
 using System.Threading.Tasks;
+using Infrastructure.EntityFrameworkCore.UserRelated;
 using Xunit;
 
 namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
 {
-    public class UserRegisterValidatorTests
+    public class UserRegisterValidatorTests : IDisposable
     {
         private readonly IServiceProvider _ServiceProvider;
 
@@ -29,6 +30,11 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
                 .Services.BuildServiceProvider();
         }
 
+        public void Dispose()
+        {
+            _ServiceProvider.GetRequiredService<ApplicationDbContext>().Dispose();
+        }
+
         [Fact]
         public async Task Validate_Success_Should_BeValidCommand()
         {
@@ -37,6 +43,7 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
             const string email = "email@email.com";
             const string phoneNumber = "+569 4979 8355";
             const string subName = "subName";
+            const string password = "password";
 
             var command = new UserRegisterCommand
             {
@@ -44,7 +51,8 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
                 UserName = userName,
                 Email = email,
                 PhoneNumber = phoneNumber,
-                SubName = subName
+                SubName = subName,
+                Password = password
             };
 
             var userManager = _ServiceProvider.GetRequiredService<ApplicationUserManager>();
@@ -56,16 +64,18 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
             result.IsValid.Should().BeTrue();
         }
 
-        [Fact]
-        public async Task Validate_Failure_Should_BeNotValid_Detail_NullName()
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public async Task Validate_Failure_Should_BeNotValid_Detail_NullName(string name)
         {
             const int expCount = 1;
-
-            const string name = null!;
+            
             const string userName = "userName";
             const string email = "email@email.com";
             const string phoneNumber = "+569 4979 8355";
             const string subName = "subName";
+            const string password = "password";
 
             var command = new UserRegisterCommand
             {
@@ -73,7 +83,8 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
                 UserName = userName,
                 Email = email,
                 PhoneNumber = phoneNumber,
-                SubName = subName
+                SubName = subName,
+                Password = password
             };
 
             var userManager = _ServiceProvider.GetRequiredService<ApplicationUserManager>();
@@ -98,6 +109,7 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
             const string email = "email@email.com";
             const string phoneNumber = "+569 4979 8355";
             const string subName = "subName";
+            const string password = "password";
 
             var command = new UserRegisterCommand
             {
@@ -105,7 +117,8 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
                 UserName = userName,
                 Email = email,
                 PhoneNumber = phoneNumber,
-                SubName = subName
+                SubName = subName,
+                Password = password
             };
 
             var userManager = _ServiceProvider.GetRequiredService<ApplicationUserManager>();
@@ -121,16 +134,18 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
                 .ContainSingle(e => e.ErrorMessage == $"El nombre no debe de tener más de {UserConstants.NameProperty.MaxLength} caracteres, ingresaste {name.Length}");
         }
 
-        [Fact]
-        public async Task Validate_Failure_Should_BeNotValid_Detail_NullUserName()
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public async Task Validate_Failure_Should_BeNotValid_Detail_NullUserName(string userName)
         {
             const int expCount = 1;
 
             const string name = "name";
-            const string userName = null!;
             const string email = "email@email.com";
             const string phoneNumber = "+569 4979 8355";
             const string subName = "subName";
+            const string password = "password";
 
             var command = new UserRegisterCommand
             {
@@ -138,7 +153,8 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
                 UserName = userName!,
                 Email = email,
                 PhoneNumber = phoneNumber,
-                SubName = subName
+                SubName = subName,
+                Password = password
             };
 
             var userManager = _ServiceProvider.GetRequiredService<ApplicationUserManager>();
@@ -163,6 +179,7 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
             const string email = "email@email.com";
             const string phoneNumber = "+569 4979 8355";
             const string subName = "subName";
+            const string password = "password";
 
             var command = new UserRegisterCommand
             {
@@ -170,7 +187,8 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
                 UserName = userName,
                 Email = email,
                 PhoneNumber = phoneNumber,
-                SubName = subName
+                SubName = subName,
+                Password = password
             };
 
             var userManager = _ServiceProvider.GetRequiredService<ApplicationUserManager>();
@@ -196,6 +214,7 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
             const string email = "email@email.com";
             const string phoneNumber = "+569 4979 8355";
             const string subName = "subName";
+            const string password = "password";
 
             var command = new UserRegisterCommand
             {
@@ -203,7 +222,8 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
                 UserName = userName,
                 Email = email,
                 PhoneNumber = phoneNumber,
-                SubName = subName
+                SubName = subName,
+                Password = password
             };
 
             var userManager = _ServiceProvider.GetRequiredService<ApplicationUserManager>();
@@ -229,6 +249,7 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
             const string email = null!;
             const string phoneNumber = "+569 4979 8355";
             const string subName = "subName";
+            const string password = "password";
 
             var command = new UserRegisterCommand
             {
@@ -236,7 +257,8 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
                 UserName = userName,
                 Email = email!,
                 PhoneNumber = phoneNumber,
-                SubName = subName
+                SubName = subName,
+                Password = password
             };
 
             var userManager = _ServiceProvider.GetRequiredService<ApplicationUserManager>();
@@ -261,6 +283,7 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
             const string email = "ADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑ@email.com";
             const string phoneNumber = "+569 4979 8355";
             const string subName = "subName";
+            const string password = "password";
 
             var command = new UserRegisterCommand
             {
@@ -268,7 +291,8 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
                 UserName = userName,
                 Email = email,
                 PhoneNumber = phoneNumber,
-                SubName = subName
+                SubName = subName,
+                Password = password
             };
 
             var userManager = _ServiceProvider.GetRequiredService<ApplicationUserManager>();
@@ -294,6 +318,7 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
             const string email = "email";
             const string phoneNumber = "+569 4979 8355";
             const string subName = "subName";
+            const string password = "password";
 
             var command = new UserRegisterCommand
             {
@@ -301,7 +326,8 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
                 UserName = userName,
                 Email = email,
                 PhoneNumber = phoneNumber,
-                SubName = subName
+                SubName = subName,
+                Password = password
             };
 
             var userManager = _ServiceProvider.GetRequiredService<ApplicationUserManager>();
@@ -327,6 +353,7 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
             const string email = UserConstants.AdminEntity.Email;
             const string phoneNumber = "+569 4979 8355";
             const string subName = "subName";
+            const string password = "password";
 
             var command = new UserRegisterCommand
             {
@@ -334,7 +361,8 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
                 UserName = userName,
                 Email = email,
                 PhoneNumber = phoneNumber,
-                SubName = subName
+                SubName = subName,
+                Password = password
             };
 
             var userManager = _ServiceProvider.GetRequiredService<ApplicationUserManager>();
@@ -358,8 +386,9 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
             const string name = "name";
             const string userName = "userName";
             const string email = "email@email.com";
-            const string phoneNumber = "ADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑ";
+            const string phoneNumber = "+569 1234 5678 1234 5678 1234 5678 1234 5678 1234 5678 1234 5678 1234 5678 1234 5678";
             const string subName = "subName";
+            const string password = "password";
 
             var command = new UserRegisterCommand
             {
@@ -367,7 +396,8 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
                 UserName = userName,
                 Email = email,
                 PhoneNumber = phoneNumber,
-                SubName = subName
+                SubName = subName,
+                Password = password
             };
 
             var userManager = _ServiceProvider.GetRequiredService<ApplicationUserManager>();
@@ -384,6 +414,41 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
         }
 
         [Fact]
+        public async Task Validate_Failure_Should_BeNotValid_Detail_BadPhoneNumber()
+        {
+            const int expCount = 1;
+
+            const string name = "name";
+            const string userName = "userName";
+            const string email = "email@email.com";
+            const string phoneNumber = "+569 asdf";
+            const string subName = "subName";
+            const string password = "password";
+
+            var command = new UserRegisterCommand
+            {
+                Name = name,
+                UserName = userName,
+                Email = email,
+                PhoneNumber = phoneNumber,
+                SubName = subName,
+                Password = password
+            };
+
+            var userManager = _ServiceProvider.GetRequiredService<ApplicationUserManager>();
+
+            var validator = new UserRegisterValidator(userManager);
+
+            var result = await validator.ValidateAsync(command);
+
+            result.IsValid.Should().BeFalse();
+
+            result.Errors.Should().HaveCount(expCount);
+            result.Errors.Should()
+                .ContainSingle(e => e.ErrorMessage == $"El número de teléfono ingresado no tiene el siguiente formato: +569 1234 9876");
+        }
+
+        [Fact]
         public async Task Validate_Failure_Should_BeNotValid_Detail_SubNameTooLong()
         {
             const int expCount = 1;
@@ -393,6 +458,7 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
             const string email = "email@email.com";
             const string phoneNumber = "+569 4979 8355";
             const string subName = "ADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑADSFGHJKLÑ";
+            const string password = "password";
 
             var command = new UserRegisterCommand
             {
@@ -400,7 +466,8 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
                 UserName = userName,
                 Email = email,
                 PhoneNumber = phoneNumber,
-                SubName = subName
+                SubName = subName,
+                Password = password
             };
 
             var userManager = _ServiceProvider.GetRequiredService<ApplicationUserManager>();
@@ -414,6 +481,42 @@ namespace Application.UnitTests.Contexts.UserBoundedContext.CQRS.Users.Register
             result.Errors.Should().HaveCount(expCount);
             result.Errors.Should()
                 .ContainSingle(e => e.ErrorMessage == $"El apellido no debe de tener más de {UserConstants.SubNameProperty.MaxLength} caracteres, ingresaste {subName.Length}");
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public async Task Validate_Failure_Should_BeNotValid_Detail_PasswordEmpty(string password)
+        {
+            const int expCount = 1;
+
+            const string name = "name";
+            const string userName = "userName";
+            const string email = "email@email.com";
+            const string phoneNumber = "+569 4979 8355";
+            const string subName = "subName";
+
+            var command = new UserRegisterCommand
+            {
+                Name = name,
+                UserName = userName,
+                Email = email,
+                PhoneNumber = phoneNumber,
+                SubName = subName,
+                Password = password
+            };
+
+            var userManager = _ServiceProvider.GetRequiredService<ApplicationUserManager>();
+
+            var validator = new UserRegisterValidator(userManager);
+
+            var result = await validator.ValidateAsync(command);
+
+            result.IsValid.Should().BeFalse();
+
+            result.Errors.Should().HaveCount(expCount);
+            result.Errors.Should()
+                .ContainSingle(e => e.ErrorMessage == $"La contraseña es obligatoria");
         }
     }
 }

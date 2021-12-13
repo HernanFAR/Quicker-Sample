@@ -4,11 +4,15 @@ using Infrastructure.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
+using Infrastructure.EntityFrameworkCore.UserRelated;
+using System.Text.RegularExpressions;
 
 namespace Application.Contexts.UserBoundedContext.CQRS.Users.Commands.Register
 {
     public class UserRegisterValidator : AbstractValidator<UserRegisterCommand>
     {
+        private static readonly Regex _PhoneRegex = new(@"^(\+\s?)?((?<!\+.*)\(\+?\d+([\s\-\.]?\d+)?\)|\d+)([\s\-\.]?(\(\d+([\s\-\.]?\d+)?\)|\d+))*(\s?(x|ext\.?)\s?\d+)?$", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+
         private readonly ApplicationUserManager _UserManager;
 
         public UserRegisterValidator(ApplicationUserManager userManager)
@@ -40,6 +44,8 @@ namespace Application.Contexts.UserBoundedContext.CQRS.Users.Commands.Register
                     .WithMessage(e => $"El correo ({e.Email}) ya existe en el sistema");
 
             RuleFor(e => e.PhoneNumber)
+                .Matches(_PhoneRegex)
+                    .WithMessage("El número de teléfono ingresado no tiene el siguiente formato: +569 1234 9876")
                 .MaximumLength(UserConstants.PhoneNumberProperty.MaxLength)
                    .WithMessage("El número de teléfono no debe de tener más de {MaxLength} caracteres, ingresaste {TotalLength}");
 
@@ -47,6 +53,9 @@ namespace Application.Contexts.UserBoundedContext.CQRS.Users.Commands.Register
                 .MaximumLength(UserConstants.SubNameProperty.MaxLength)
                     .WithMessage("El apellido no debe de tener más de {MaxLength} caracteres, ingresaste {TotalLength}");
 
+            RuleFor(e => e.Password)
+                .NotEmpty()
+                    .WithMessage("La contraseña es obligatoria");
         }
 
         private Task<bool> BeANonExistingUserName(string userName, CancellationToken cancellationToken)
