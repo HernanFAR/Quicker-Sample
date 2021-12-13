@@ -1,4 +1,5 @@
 ﻿using Domain.Contexts.UserBoundedContext.Core;
+using Infrastructure.EntityFrameworkCore.UserRelated;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
